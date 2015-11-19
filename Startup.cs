@@ -17,7 +17,9 @@ namespace AureliaWebApi
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddUserSecrets()
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
