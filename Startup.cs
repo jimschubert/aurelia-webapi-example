@@ -1,18 +1,19 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AureliaWebApi.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace AureliaWebApi
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
@@ -21,6 +22,8 @@ namespace AureliaWebApi
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+            
+            Configuration["Data:DefaultConnection:ConnectionString"] = $"Data Source={ appEnv.ApplicationBasePath }/blog.db";
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -30,6 +33,11 @@ namespace AureliaWebApi
         {
             // Add framework services.
             services.AddMvc();
+            
+            services.AddEntityFramework()
+               .AddSqlite()
+               .AddDbContext<BlogContext>(options =>
+                   options.UseSqlite(Configuration["Data:DefaultConnection:ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +51,34 @@ namespace AureliaWebApi
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            using (var context = app.ApplicationServices.GetService<BlogContext>())
+            {
+                if (!context.Blogs.Any())
+                {
+                    var blog = new Blog
+                    {
+                        BlogId = 1,
+                        Name = "AureliaWebApi",
+                        Posts = new List<Post>(1)
+                        {
+                            new Post
+                            {
+                                BlogId = 1,
+                                Content = "<div>1,2,3!</div>",
+                                PostId = 1,
+                                Title = "Testing"
+                            }
+                        }
+                    };
+                    context.Blogs.Add(blog);
+                    context.SaveChanges();
+                }
+            }
         }
 
         // Entry point for the application.
-        public static void Main(string[] args) => Microsoft.AspNet.Hosting.WebApplication.Run<Startup>(args);
+        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
+
 }
