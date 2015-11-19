@@ -3,6 +3,8 @@ using System.Linq;
 using AureliaWebApi.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.StaticFiles;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +35,9 @@ namespace AureliaWebApi
         {
             // Add framework services.
             services.AddMvc();
-            
+
+            services.AddDirectoryBrowser();
+
             services.AddEntityFramework()
                .AddSqlite()
                .AddDbContext<BlogContext>(options =>
@@ -47,8 +51,19 @@ namespace AureliaWebApi
             loggerFactory.AddDebug();
 
             app.UseIISPlatformHandler();
-
-            app.UseStaticFiles();
+            
+            var staticFileServer = new FileServerOptions
+            {
+                RequestPath = new PathString(string.Empty),
+                EnableDirectoryBrowsing = true,
+                StaticFileOptions =
+                {
+                    ServeUnknownFileTypes = true,
+                    DefaultContentType = "text/html"
+                },
+                EnableDefaultFiles = true
+            };
+            app.UseFileServer(staticFileServer);
 
             app.UseMvc();
 
