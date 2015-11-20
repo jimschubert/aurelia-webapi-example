@@ -14,5 +14,16 @@ namespace AureliaWebApi.Models
             //                 .GetRequiredService<IApplicationEnvironment>();
             // optionsBuilder.UseSqlite($"Data Source={ appEnv.ApplicationBasePath }/blog.db");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post>(p =>
+            {
+                p.HasKey(_ => _.PostId);
+                p.Property(_ => _.PostId).ValueGeneratedOnAddOrUpdate();
+            });
+        }
     }
 }

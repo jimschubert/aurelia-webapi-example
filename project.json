@@ -35,8 +35,8 @@
     "node_modules",
     "bower_components"
   ],
-  "publishExclude": [
-    "**.user",
-    "**.vspscc"
-  ]
+    "publishExclude": [
+        "**.user",
+        "**.vspscc"
+    ]
 }

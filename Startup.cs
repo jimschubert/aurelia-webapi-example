@@ -35,7 +35,6 @@ namespace AureliaWebApi
         {
             // Add framework services.
             services.AddMvc();
-
             services.AddDirectoryBrowser();
 
             services.AddEntityFramework()
@@ -66,7 +65,7 @@ namespace AureliaWebApi
             app.UseFileServer(staticFileServer);
 
             app.UseMvc();
-
+            
             using (var context = app.ApplicationServices.GetService<BlogContext>())
             {
                 if (!context.Blogs.Any())
@@ -81,7 +80,6 @@ namespace AureliaWebApi
                             {
                                 BlogId = 1,
                                 Content = "<div>1,2,3!</div>",
-                                PostId = 1,
                                 Title = "Testing"
                             }
                         }
