@@ -1,39 +1,45 @@
 {
-  "name": "aurelia-beginner-kit-es2016",
-  "version": "1.0.0-beta.1.0.1",
-  "description": "A beginner starter kit for learning Aurelia with ES 2016.",
+  "name": "aurelia-webapi-example",
+  "version": "1.0.0",
+  "description": "An example ASP.NET 5 Web API and Aurelia project, based on the Aurelia 1.0-beta starter kit created by Rob Eisenberg (available for download from http://aurelia.io).",
   "keywords": [
     "aurelia",
-    "kit",
-    "beginner",
-    "skeleton"
+    "webapi",
+    "example"
   ],
-  "homepage": "http://aurelia.io",
-  "license": "CC0-1.0",
-  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
-  "main": "dist/main.js",
+  "repository": {
+    "url": "https://github.com/jimschubert/aurelia-webapi-example"
+  },
+  "private": true,
+  "homepage": "https://github.com/jimschubert",
+  "license": "MIT",
+  "author": "Jim Schubert <james.schubert@gmail.com> (http://ipreferjim.com/)",
   "devDependencies": {
     "aurelia-bundler": "^0.1.8",
     "aurelia-tools": "^0.1.3",
     "babel": "^5.8.23",
     "babel-eslint": "^4.1.3",
-    "browser-sync": "^1.8.1",
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
     "gulp": "^3.8.10",
     "gulp-babel": "^5.1.0",
     "gulp-bump": "^0.3.1",
+    "gulp-cache": "^0.4.0",
     "gulp-changed": "^1.1.0",
     "gulp-eslint": "^1.0.0",
+    "gulp-if": "^2.0.0",
+    "gulp-imagemin": "^2.4.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^0.6.6",
     "gulp-protractor": "^0.0.12",
+    "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.3.0",
+    "gulp-task-listing": "^1.0.1",
     "gulp-yuidoc": "^0.1.2",
     "isparta": "^3.1.0",
     "istanbul": "gotwarlost/istanbul#source-map",
     "jasmine-core": "^2.1.3",
-    "jspm": "^0.16.11",
+    "jspm": "0.16.11",
     "karma": "^0.13.15",
     "karma-babel-preprocessor": "^5.2.1",
     "karma-chrome-launcher": "^0.1.7",
@@ -47,6 +53,9 @@
     "yargs": "^2.1.1"
   },
   "jspm": {
+    "directories": {
+      "baseURL": "client/app"
+    },
     "dependencies": {
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0-beta.1",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1",
