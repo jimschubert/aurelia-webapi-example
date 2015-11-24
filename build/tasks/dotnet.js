@@ -3,6 +3,7 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import { spawn } from 'child_process';
+import args from '../args';
 
 function runner(cmd, args){
 	return function(callback) {
@@ -18,7 +19,31 @@ function runner(cmd, args){
 	}
 }
 
+// kinda ugly hack to account for Kestrel not supporting pipes
+function runnerWeb(cmd, args){
+	return function(callback) {
+		let command = spawn(cmd, args);
+		var called = false;
+		command.stdout.on('data', function(data){
+			process.stdout.write(data);
+			
+			if(!called && data.toString().indexOf('Now listening') !== -1) {
+				called = true;
+				callback();
+			}
+		});
+		command.stderr.pipe(process.stderr);
+		command.on('close', function (code) {
+			if (code !== 0) {
+				throw new gutil.PluginError('dotnet', `Exited with code ${code}: ${cmd} ${args}.`);
+			}
+		});
+	}
+}
+
 gulp.task('dotnet-build', runner('dnu', ['build']));
 gulp.task('dotnet-restore', runner('dnu', ['restore']));
-gulp.task('dotnet-run', runner('dnx', ['web']));
+
+// Run gulp with, e.g. --port=5000 to change server port. BrowserSync task picks up this change.
+gulp.task('dotnet-run', runnerWeb('dnx', ['web', '--server.urls=http://localhost:' + (args.port || '5007')]));
 gulp.task('dotnet-test', runner('dnx', ['test']));

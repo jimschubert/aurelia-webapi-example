@@ -9,7 +9,7 @@ gulp.task('default', (callback) => {
 		['build', 'dotnet-restore'],
 		'dotnet-build',
 		// 'dotnet-test',
-		['dotnet-run', 'watch'],
+		['dotnet-run', 'serve', 'watch'],
 		callback
 	);
 });

@@ -35,8 +35,13 @@
     "node_modules",
     "bower_components"
   ],
-    "publishExclude": [
-        "**.user",
-        "**.vspscc"
-    ]
+  "publishExclude": [
+      "**.user",
+      "**.vspscc"
+  ],
+   "scripts": {
+    "first-run": "npm install -g gulp@3.9.0",
+    "prepublish": [ "npm install", "gulp default" ],
+    "update": "npm install && npm prune"
+  }
 }
