@@ -2,7 +2,8 @@
 'use strict';
 import path from 'path';
 
-let source = path.resolve(path.normalize(__dirname + '/../'));
+let root = path.resolve(path.normalize(__dirname + '/../'));
+let source = path.resolve(path.normalize(__dirname + '/../src/'));
 let client =  `${source}/client`;
 let clientSource = `${client}/app`;
 let outputRoot =  `${source}/wwwroot`;
@@ -12,7 +13,9 @@ const subdir = '{,/**}';
 const allFiles = subdir + '/*';
 
 let paths = {
-  root: source,
+  root: root,
+  srcDir: source,
+  testDir: `${root}/test`,
   html:  `${clientSource}/**/*.html`,
   css: `${clientSource}/styles/**/*.css`,
   styles: `${clientSource}/styles/**/*.scss`,

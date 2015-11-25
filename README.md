@@ -1,42 +1,115 @@
-# Welcome to ASP.NET 5 Preview
+# Aurelia Web API Example
 
-We've made some big updates in this release, so it’s **important** that you spend a few minutes to learn what’s new.
+This is an example of an Aurelia web application backed by an ASP.NET 5 Web API web service.
 
-ASP.NET 5 has been rearchitected to make it **lean** and **composable**. It's fully **open source** and available on [GitHub](http://go.microsoft.com/fwlink/?LinkID=517854).
-Your new project automatically takes advantage of modern client-side utilities like [Bower](http://go.microsoft.com/fwlink/?LinkId=518004) and [npm](http://go.microsoft.com/fwlink/?LinkId=518005) (to add client-side libraries) and [Gulp](http://go.microsoft.com/fwlink/?LinkId=518007) (for client-side build and automation tasks).
+The client and server build tasks are handled by gulp.
 
-We hope you enjoy the new capabilities in ASP.NET 5 and Visual Studio 2015.
-The ASP.NET Team
+This example assumes you are familiar with node.js, npm, and gulp.
 
-### You've created a new ASP.NET 5 project. [Learn what's new](http://go.microsoft.com/fwlink/?LinkId=518016)
+## Recommendation:  
 
-### This application consists of:
-* Sample pages using ASP.NET MVC 6
-* [Gulp](http://go.microsoft.com/fwlink/?LinkId=518007) and [Bower](http://go.microsoft.com/fwlink/?LinkId=518004) for managing client-side resources
-* Theming using [Bootstrap](http://go.microsoft.com/fwlink/?LinkID=398939)
+If you're using npm 2.x, I recommend upgrading npm. If you don't want to upgrade your system npm, install a version manager.
 
-#### NEW CONCEPTS
-* [The 'wwwroot' explained](http://go.microsoft.com/fwlink/?LinkId=518008)
-* [Configuration in ASP.NET 5](http://go.microsoft.com/fwlink/?LinkId=518012)
-* [Dependency Injection](http://go.microsoft.com/fwlink/?LinkId=518013)
-* [Razor TagHelpers](http://go.microsoft.com/fwlink/?LinkId=518014)
-* [Manage client packages using Gulp](http://go.microsoft.com/fwlink/?LinkID=517849)
-* [Develop on different platforms](http://go.microsoft.com/fwlink/?LinkID=517850)
+    npm install nave -g
+	nave use 4.2.2
+	npm install npm -g
+	npm --version # should be 3.x
 
-#### CUSTOMIZE APP
-* [Add Controllers and Views](http://go.microsoft.com/fwlink/?LinkID=398600)
-* [Add Data using EntityFramework](http://go.microsoft.com/fwlink/?LinkID=398602)
-* [Add Authentication using Identity](http://go.microsoft.com/fwlink/?LinkID=398603)
-* [Add real time support using SignalR](http://go.microsoft.com/fwlink/?LinkID=398606)
-* [Add Class library](http://go.microsoft.com/fwlink/?LinkID=398604)
-* [Add Web APIs with MVC 6](http://go.microsoft.com/fwlink/?LinkId=518009)
-* [Add client packages using Bower](http://go.microsoft.com/fwlink/?LinkID=517848)
+If you don't install npm 3, projects with many npm dependencies will result in lots of nested folders and excessive disk IO.
 
-#### DEPLOY
-* [Run your app locally](http://go.microsoft.com/fwlink/?LinkID=517851)
-* [Run your app on ASP.NET Core 5](http://go.microsoft.com/fwlink/?LinkID=517852)
-* [Run commands in your 'project.json'](http://go.microsoft.com/fwlink/?LinkID=517853)
-* [Publish to Microsoft Azure Web Sites](http://go.microsoft.com/fwlink/?LinkID=398609)
-* [Publish to the file system](http://go.microsoft.com/fwlink/?LinkId=518019)
+# Install
 
-We would love to hear your [feedback](http://go.microsoft.com/fwlink/?LinkId=518015)
+Download and install ASP.NET 5 from [https://get.asp.net/](https://get.asp.net/). 
+
+Install `1.0.0-rc1-final`:
+
+    dnvm install 1.0.0-rc1-final
+	dnvm use 1.0.0-rc1-final
+	
+Install dependencies:
+
+    npm install
+	npm install gulp jspm -g
+	jspm install
+
+# Structure
+
+	.
+	├── build
+	│   └── tasks
+	├── node_modules
+	├── src
+	│   ├── Controllers
+	│   ├── Migrations
+	│   ├── Models
+	│   ├── Properties
+	│   ├── client
+	│   │   ├── app
+	│   │   └── specs
+	│   └── wwwroot
+	└── test
+		└── AureliaWebApiTests
+
+* build
+> Gulp build settings
+* build/tasks
+> Gulp build tasks, relies on settings in parent directory
+* src
+> Location of the client and server source code
+* src/{Controllers,Migrations,Models,Properties,wwwroot}
+> Folders related to Web API
+* src/client
+> Base folder for client-related source and tests
+* src/client/app
+> The client source: Aurelia written in ES6
+* src/client/specs
+> Unit and end-to-end tests for Aurelia
+* test
+> Aggregate folder for all server-side tests
+
+# Tasks
+
+	$ gulp help
+	[22:52:08] Using gulpfile /Volumes/Extra/projects/AureliaWebApi/gulpfile.js
+	[22:52:08] Starting 'help'...
+	
+	Main Tasks
+	------------------------------
+		build
+		changelog
+		clean
+		default
+		help
+		lint
+		release
+		serve
+		watch
+	
+	Sub Tasks
+	------------------------------
+		build-css
+		build-deps
+		build-html
+		build-images
+		build-sass
+		build-source
+		bump-version
+		dotnet-build
+		dotnet-restore
+		dotnet-run
+		dotnet-test
+		prepare-release
+	
+	[22:52:08] Finished 'help' after 1.25 ms
+
+Main build tasks should be pretty self-explanatory. 
+
+Run `gulp` and everything gets built, tested, and staged for testing in browser sync.
+
+# TODO
+
+* Rethink `jspm_packages` to avoid copying from client/app to wwwroot during build.
+* Iterate all tests in `test` directory and execute dnx test.
+* Setup karma and end-to-end testing
+* Work up a client application in Aurelia
+* Upgrade everything to include dotnet50
