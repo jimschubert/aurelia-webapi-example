@@ -26,21 +26,41 @@ namespace AureliaWebApi
             Configuration = builder.Build();
             
             Configuration["Data:DefaultConnection:ConnectionString"] = $"Data Source={ appEnv.ApplicationBasePath }/blog.db";
+            
+            Environment = env;
         }
 
         public IConfigurationRoot Configuration { get; set; }
+        
+        private IHostingEnvironment Environment{ get; set; } 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddMvc();
-            services.AddDirectoryBrowser();
-
-            services.AddEntityFramework()
-               .AddSqlite()
-               .AddDbContext<BlogContext>(options =>
-                   options.UseSqlite(Configuration["Data:DefaultConnection:ConnectionString"]));
+            // We want to run an in-memory database in Development, real database in Production and other environments..
+            if(Environment.IsDevelopment())
+            {
+                // See here for more: http://docs.asp.net/en/latest/fundamentals/environments.html
+                services.AddMvc();
+                services.AddEntityFramework()
+                    .AddInMemoryDatabase();
+                    
+                var optionsBuilder = new DbContextOptionsBuilder<BlogContext>();
+                optionsBuilder.UseInMemoryDatabase();
+                var db = new BlogContext(services.BuildServiceProvider(), optionsBuilder.Options);
+                
+                services.Add(new ServiceDescriptor(typeof(BlogContext), db));
+                
+            } else {
+                // Add framework services.
+                services.AddMvc();
+                services.AddDirectoryBrowser();
+    
+                services.AddEntityFramework()
+                .AddSqlite()
+                .AddDbContext<BlogContext>(options =>
+                    options.UseSqlite(Configuration["Data:DefaultConnection:ConnectionString"]));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,27 +86,29 @@ namespace AureliaWebApi
 
             app.UseMvc();
             
-            using (var context = app.ApplicationServices.GetService<BlogContext>())
+            var context = app.ApplicationServices.GetService<BlogContext>();
+            // context.Database.Migrate isn't directly supported by the 
+            // in memory database configured for the development environment.
+            if(!env.IsDevelopment()) context.Database.Migrate();
+            
+            if (!context.Blogs.Any())
             {
-                if (!context.Blogs.Any())
+                var blog = new Blog
                 {
-                    var blog = new Blog
+                    BlogId = 1,
+                    Name = "AureliaWebApi",
+                    Posts = new List<Post>(1)
                     {
-                        BlogId = 1,
-                        Name = "AureliaWebApi",
-                        Posts = new List<Post>(1)
+                        new Post
                         {
-                            new Post
-                            {
-                                BlogId = 1,
-                                Content = "<div>1,2,3!</div>",
-                                Title = "Testing"
-                            }
+                            BlogId = 1,
+                            Content = "<div>1,2,3!</div>",
+                            Title = "Testing"
                         }
-                    };
-                    context.Blogs.Add(blog);
-                    context.SaveChanges();
-                }
+                    }
+                };
+                context.Blogs.Add(blog);
+                context.SaveChanges();
             }
         }
 

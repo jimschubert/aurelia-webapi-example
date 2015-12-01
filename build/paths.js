@@ -3,7 +3,7 @@
 import path from 'path';
 
 let root = path.resolve(path.normalize(__dirname + '/../'));
-let source = path.resolve(path.normalize(__dirname + '/../src/'));
+let source = path.resolve(path.normalize(__dirname + '/../src/AureliaWebApi'));
 let client =  `${source}/client`;
 let clientSource = `${client}/app`;
 let outputRoot =  `${source}/wwwroot`;

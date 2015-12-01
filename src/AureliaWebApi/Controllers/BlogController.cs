@@ -23,15 +23,11 @@ namespace AureliaWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var blogs = await _context.Blogs.Select(blog => new
-            {
-                blog.BlogId,
-                blog.Name
-            }).ToListAsync();
+            var blogs = await _context.Blogs.ToListAsync();
 
             if (!blogs.Any())
             {
-                return HttpNotFound();
+                return new NoContentResult();
             }
 
             return new ObjectResult(blogs);
@@ -80,11 +76,13 @@ namespace AureliaWebApi.Controllers
 
         // PUT api/blog/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] Blog blog)
+        public async Task<object> Put(int id, [FromBody] Blog blog)
         {
             blog.BlogId = id; // no funny business.
             _context.Blogs.Update(blog, GraphBehavior.SingleObject);
             await _context.SaveChangesAsync();
+            
+            return Task.FromResult<object>(null);
         }
 
         // DELETE api/blog/5

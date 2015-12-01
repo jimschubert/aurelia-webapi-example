@@ -106,6 +106,12 @@ Main build tasks should be pretty self-explanatory.
 
 Run `gulp` and everything gets built, tested, and staged for testing in browser sync.
 
+By default, `gulp dotnet-run` will run as a Production environment. You can run in Development by passing the environment variable:
+
+    ASPNET_ENV=Development gulp dotnet-run
+
+The development environment will use an in-memory database while the production environment persists to a local SQLite database file.
+
 # TODO
 
 * Rethink `jspm_packages` to avoid copying from client/app to wwwroot during build.

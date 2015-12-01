@@ -1,9 +1,14 @@
 ﻿using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
+using System;
 
 namespace AureliaWebApi.Models
 {
     public class BlogContext : DbContext
-    {
+    {   
+        public BlogContext() { }
+        public BlogContext(IServiceProvider services, DbContextOptions options) : base(services, options) { }
+        
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
@@ -14,7 +19,7 @@ namespace AureliaWebApi.Models
             //                 .GetRequiredService<IApplicationEnvironment>();
             // optionsBuilder.UseSqlite($"Data Source={ appEnv.ApplicationBasePath }/blog.db");
         }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

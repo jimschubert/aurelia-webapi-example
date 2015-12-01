@@ -1,22 +1,33 @@
 {
-    "version": "1.0.0-*",
-    "description": "",
-    "authors": [ "" ],
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
-    "tooling": {
-      "defaultNamespace": "AureliaWebApiTests"
-    },
-  "dependencies": {
-    "src": "1.0.0-*",
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204"
+  "version": "1.0.0-*",
+  "description": "",
+  "authors": [
+    ""
+  ],
+  "tags": [
+    ""
+  ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "tooling": {
+    "defaultNamespace": "AureliaWebApiTests"
   },
-    "commands": {
-        "test": "xunit.runner.dnx"
-    },
-    "frameworks": {
-      "dnx451": {}
-    }
+  "userSecretsId": "AureliaWebApi",
+  "dependencies": {
+    "AureliaWebApi": "1.0.0-*",
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
+    "EntityFramework.Core": "7.0.0-rc1-final",
+    "EntityFramework.InMemory": "7.0.0-rc1-final",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+    "Microsoft.AspNet.TestHost": "1.0.0-rc1-16014",
+    "Microsoft.Extensions.Logging.Testing": "1.0.0-rc2-15815",
+    "Moq": "4.2.1312.1622"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+  "frameworks": {
+    "dnx451": {}
+  }
 }
