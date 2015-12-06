@@ -1,0 +1,19 @@
+<template>
+    <require from="../post/summary" as="post-summary"></require>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<h2>${blog.Name}</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10 col-sm-12 col-xs-12">
+				<post-summary repeat.for="post of posts" post.bind="post" class="row"></post-summary>
+			</div>
+			<div class="col-md-2">
+				<h3>Archives</h3>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis ipsa fuga sequi perspiciatis ut consequuntur voluptas, ratione fugiat accusantium vitae, sunt hic iure corporis, maxime quam. Voluptas accusantium temporibus harum.
+			</div>
+		</div>
+	</div>
+</template>

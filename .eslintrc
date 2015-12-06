@@ -1,5 +1,9 @@
 {
   "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "classes": true,
+    "objectLiteralShorthandMethods": true
+  },
   "rules": {
     "strict": 0,
     "quotes": [1, "single"],

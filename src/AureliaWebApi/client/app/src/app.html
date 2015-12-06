@@ -1,11 +1,23 @@
 <template>
-  <h1>${message}</h1>
-  <div class="container">
-  <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-3"><p class="boxy">post</p></div>
-    <div class="col-sm-12 col-md-6 col-lg-3"><p class="boxy">post</p></div>
-    <div class="col-sm-12 col-md-6 col-lg-3"><p class="boxy">post</p></div>
-    <div class="col-sm-12 col-md-6 col-lg-3"><p class="boxy">post</p></div>
-  </div>
-</div>
+    <require from="bootstrap/css/bootstrap.css"></require>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <p><a route-href="route: home">${header}</a></p>
+                <small>${subheader}</small>
+            </div> 
+        </div>
+    </nav>
+    
+    <div class="page container">
+        <router-view></router-view>
+    </div>
+    
+    <footer class="footer">
+      <div class="container">
+        ${description}
+      </div>
+    </footer>
+    
 </template>

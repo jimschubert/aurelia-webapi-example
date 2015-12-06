@@ -31,6 +31,11 @@ Install dependencies:
     npm install
 	npm install gulp jspm -g
 	jspm install
+	
+Setup the database
+
+	cd src/AureliaWebApi
+    dnx ef database update -e Production
 
 # Structure
 

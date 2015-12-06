@@ -97,18 +97,44 @@ namespace AureliaWebApi
                 {
                     BlogId = 1,
                     Name = "AureliaWebApi",
-                    Posts = new List<Post>(1)
-                    {
+                    Posts = new List<Post>{
                         new Post
                         {
                             BlogId = 1,
-                            Content = "<div>1,2,3!</div>",
-                            Title = "Testing"
+                            Content = "<div>Testing… 1,2,3!</div>",
+                            Title = "First Post"
+                        },
+                        new Post
+                        {
+                            BlogId = 1,
+                            Content = "<div>小洞不补，大洞吃苦</div>",
+                            Title = "Unicode test"
+                        },
+                        new Post
+                        {
+                            BlogId = 1,
+                            Content = @"
+                            #### daringfireball.net
+                            I get 10 times more traffic from [Google] [1] than from
+                            [Yahoo] [2] or [MSN] [3].
+                            
+                            [1]: http://google.com/        ""Google""
+                            [2]: http://search.yahoo.com/  ""Yahoo Search""
+                            [3]: http://search.msn.com/    ""MSN Search""
+                            ",
+                            Title = "Does markdown work?"
+                        },
+                        new Post
+                        {
+                            BlogId = 1,
+                            Content = "<img src=\"http://placehold.it/350x150\"/>",
+                            Title = "Images Test"
                         }
                     }
                 };
                 context.Blogs.Add(blog);
-                context.SaveChanges();
+                
+                context.SaveChanges(true);
             }
         }
 

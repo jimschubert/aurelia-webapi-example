@@ -24,11 +24,7 @@ namespace AureliaWebApi.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Post>(p =>
-            {
-                p.HasKey(_ => _.PostId);
-                p.Property(_ => _.PostId).ValueGeneratedOnAddOrUpdate();
-            });
+          
         }
     }
 }
