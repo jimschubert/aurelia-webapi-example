@@ -15,7 +15,7 @@ export class App {
         config.map([
             { route: ['','home'], name: 'home', moduleId: './blog/list', nav: true, title: 'Blog' },
             { route: 'blog/:id', name: 'blog.detail',  moduleId: './blog/detail', title: 'Blog' },
-            { route: 'blog', name: 'blog', moduleId: 'blog', nav: true, title: 'Blog' }
+            { route: 'post/:id', name: 'post.detail', moduleId: './post/detail', title: 'Blog' }
         ]);
 
         this.router = router;

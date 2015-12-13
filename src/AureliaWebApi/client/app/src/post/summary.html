@@ -1,6 +1,6 @@
 <template>
 	<div class="col-lg-12">
-		<h3>${post.Title}</h3>
+		<h3><a route-href="route: post.detail; params.bind: { id: post.PostId }">${post.Title}</a></h3>
 		<div innerHTML.bind="post.Content"></div>
 	</div>
 </template>
