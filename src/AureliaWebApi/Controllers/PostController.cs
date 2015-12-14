@@ -44,17 +44,27 @@ namespace AureliaWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Post post)
         {
-            if (post.PostId > 0)
+            if (ModelState.IsValid)
             {
-                return HttpBadRequest();
+                if (post.PostId > 0)
+                {
+                    return HttpBadRequest();
+                }
+
+                if (post.BlogId <= 0)
+                {
+                    return HttpBadRequest("Invalid blog specified.");
+                }
+
+                post.PostId = default(int);
+                _context.Posts.Add(post);
+
+                await _context.SaveChangesAsync();
+
+                return new ObjectResult(post);
             }
 
-            post.PostId = default(int);
-            _context.Posts.Add(post);
-
-            await _context.SaveChangesAsync();
-
-            return new ObjectResult(post);
+            return HttpBadRequest();
         }
 
         // PUT api/post/5
